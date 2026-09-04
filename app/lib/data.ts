@@ -9,8 +9,8 @@ import {
 } from "./definitions";
 import { formatCurrency } from "./utils";
 
-if (!process.env.POSTGRES_URL) {
-  throw new Error("POSTGRES_URL environment variable is not set");
+if (!process.env.POSTGRES_PRISMA_URL) {
+  throw new Error("POSTGRES_PRISMA_URL environment variable is not set");
 }
 
 // Lazy-load the postgres connection to avoid connecting during build time
@@ -18,8 +18,12 @@ let sql: ReturnType<typeof postgres> | null = null;
 
 function getDb() {
   if (!sql) {
-    sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+    sql = postgres(process.env.POSTGRES_PRISMA_URL!, {
+      ssl: "require",
+      prepare: false,
+    });
   }
+
   return sql;
 }
 
