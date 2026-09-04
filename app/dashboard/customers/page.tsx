@@ -1,7 +1,9 @@
-import { fetchFilteredCustomers } from '@/app/lib/data';
-import { Suspense } from 'react';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
-import CustomersTable from '@/app/ui/customers/table';
+import { fetchFilteredCustomers } from "@/app/lib/data";
+import { Suspense } from "react";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import CustomersTable from "@/app/ui/customers/table";
+
+export const dynamic = "force-dynamic";
 
 export default async function Page({
   searchParams,
@@ -13,7 +15,7 @@ export default async function Page({
 }) {
   // Await the searchParams Promise
   const params = await searchParams;
-  const query = params?.query || '';
+  const query = params?.query || "";
   const currentPage = Number(params?.page) || 1;
 
   const customers = await fetchFilteredCustomers(query);
